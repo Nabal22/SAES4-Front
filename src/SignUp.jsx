@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 export const SignUp = (props) => {
   const [email, setEmail] = useState('');
   const [nom, setNom] = useState('');
