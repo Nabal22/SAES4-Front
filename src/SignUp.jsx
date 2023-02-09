@@ -9,6 +9,8 @@ export const SignUp = (props) => {
   const [ville, setVille] = useState('');
   const [dateNaissance, setDateNaissance] = useState('');
 
+  const cookies = props.cookies;
+
   const handleSubmit = async (e) => {
       e.preventDefault();
       try {
@@ -27,12 +29,17 @@ export const SignUp = (props) => {
           })
         });
         const data = await response.json();
-        console.log(data);
+          cookies.set('token',data.token);
       } catch (error) {
         console.error(error);
       }
   };
 
+  if(cookies.get('token')!=null){
+    console.log(cookies.get('token'));
+  }
+else{
+  console.log(cookies.get('token'));
   return (
     <form className='form' onSubmit={handleSubmit}>
       <div>
@@ -94,6 +101,8 @@ export const SignUp = (props) => {
     </form>
 
   );
+}
+  
 };
 
 export default SignUp;

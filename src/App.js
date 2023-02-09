@@ -9,8 +9,13 @@ import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import img from './img/logo.png';
 
+import Cookies from 'universal-cookie';
+
+// Use cookie to store JWT's login token
+
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
+  const cookies = new Cookies();
 
   const toggleForm = (formName) =>{
     setCurrentForm(formName);
@@ -30,9 +35,10 @@ function App() {
         </h1>
         {/* <User name={'alban'}
         /> */}
+        <button onClick={() => cookies.remove('token')}> Enlever Cookies</button>
       </header>
         {
-          currentForm === "login" ? <SignIn onFormSwitch={toggleForm} /> : <SignUp onFormSwitch={toggleForm} />
+          currentForm === "login" ? <SignIn cookies={cookies} onFormSwitch={toggleForm} /> : <SignUp cookies={cookies} onFormSwitch={toggleForm} />
         }
       <footer>
         <span>Text Footer</span>
