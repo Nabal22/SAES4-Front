@@ -1,3 +1,11 @@
+# Intialiser le projet
+
+Dans le repertoire du projet, il faut taper :
+
+### `npm install`
+
+Cela créera un dossier Node Modules qui contient les dépendances React?
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
