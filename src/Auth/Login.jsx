@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Sondages from '../Sondages';
 
-export const SignIn = (props) => {
+export const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -24,42 +24,47 @@ export const SignIn = (props) => {
             "password" : password,
           })
         });
+
         const data = await response.json();
-        cookies.set('token',data.token);
-        return ( <Sondages token={data.token} />);
+        if(typeof data.token === 'undefined'){
+          console.log('Erreur : ', data.error);
+          document.querySelector('.error-text').textContent = data.error;
+          document.querySelector('.error').style.display = "flex";
+        }
+        else{
+          cookies.set('token',data.token);
+          window.location.href = '/';
+        }
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
-    };
+  };
   
     return (
-      <div className="form">
-        <form onSubmit={handleSubmit}>
-          <div>
+      <div className="auth-form-container">
+          <h2>Login</h2>
+          <form className="login-form" onSubmit={handleSubmit}>
             <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
+            <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
             <label htmlFor="password">Mot de passe:</label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="********"
             />
-          </div>
           <button type="submit">Se connecter</button>
         </form>
-        <button onClick={() => props.onFormSwitch('register')}>Pas encore de compte ? Clique ici</button>
+        <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Pas encore de compte ? Clique ici</button>
+        <div className='error'>
+          <span>Erreur</span>
+          <span className='error-text'></span>
+        </div>
       </div>
     );
 
   }
 };
 
-export default SignIn;
+export default Login;

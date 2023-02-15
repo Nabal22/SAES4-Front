@@ -1,10 +1,9 @@
 import './css/colors.css';
 import './css/App.css';
 import './index.css';
-import './css/tmp.css';
 
-import SignUp from './Auth/SignUp';
-import SignIn from './Auth/SignIn';
+import Register from './Auth/Register';
+import Login from './Auth/Login';
 import React, {useState} from 'react';
 // import ReactDOM from 'react-dom';
 import img from './img/logo.png';
@@ -38,7 +37,7 @@ function App() {
         <button onClick={() =>{ cookies.remove('token'); window.location.href = '/'; }}> Se déconnecter </button>
       </header>
         {
-          currentForm === "login" ? <SignIn cookies={cookies} onFormSwitch={toggleForm} /> : <SignUp cookies={cookies} onFormSwitch={toggleForm} />
+          currentForm === "login" ? <Login cookies={cookies} onFormSwitch={toggleForm} /> : <Register cookies={cookies} onFormSwitch={toggleForm} />
         }
       <footer>
         <span>Text Footer</span>
