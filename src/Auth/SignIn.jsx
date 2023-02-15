@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Sondages from '../Sondages';
 
 export const SignIn = (props) => {
   const [email, setEmail] = useState('');
@@ -7,8 +8,7 @@ export const SignIn = (props) => {
   const cookies = props.cookies;
 
   if(cookies.get('token')!=null){
-    console.log(cookies.get('token'));
-    return ( <h1>Vous etes connectés !!</h1>)
+    return ( <Sondages token={cookies.get('token')} /> )
   }
   else{
     const handleSubmit = async (e) => {
@@ -25,8 +25,8 @@ export const SignIn = (props) => {
           })
         });
         const data = await response.json();
-        console.log(data);
         cookies.set('token',data.token);
+        return ( <Sondages token={data.token} />);
       } catch (error) {
         console.error(error);
       }

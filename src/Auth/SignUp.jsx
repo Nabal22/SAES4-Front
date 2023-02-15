@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Sondages from '../Sondages';
 
 export const SignUp = (props) => {
   const [email, setEmail] = useState('');
@@ -29,17 +29,17 @@ export const SignUp = (props) => {
           })
         });
         const data = await response.json();
-          cookies.set('token',data.token);
+        cookies.set('token',data.token);
       } catch (error) {
         console.error(error);
       }
   };
 
   if(cookies.get('token')!=null){
-    console.log(cookies.get('token'));
+    console.log('cookie', cookies.get('token'));
   }
 else{
-  console.log(cookies.get('token'));
+  console.log("no cookie");
   return (
     <form className='form' onSubmit={handleSubmit}>
       <div>
