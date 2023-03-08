@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from "react-router-dom";
 class Sondages extends React.Component {
   constructor(props) {
     super(props);
@@ -26,15 +26,16 @@ class Sondages extends React.Component {
   }
 
   render() {
+    console.log(this.state.sondageList);
     return (
       this.state.sondageList.map((sondage,i) =>{
         return(
-          <a className='sondage-link' href={`/sondage/${sondage.id}`} key={i}>
-            <div className='sondage-div'>
+          <Link to={`/sondage/${sondage.id}`} key={i} state={{ nom: sondage.nom, aRepondu : sondage.aRepondu, nbQuestion : sondage.nbQuestion }}>
+            <div className='sondage-div sondage-link'>
               <span className='sondage-div-name'>{sondage.nom}</span>
               <span className='sondage-div-nb-questions'>{sondage.nbQuestion} Questions</span>
             </div>
-          </a>
+          </Link>
         )
       })
     )

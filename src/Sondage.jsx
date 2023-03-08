@@ -1,16 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import React, { useState } from 'react';
+import withRouter from './withRouter';
 
-function Sondage(props) {
-  const id = useParams().id;
-  const  cookies  = props.cookies;
-  const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const url = 'api/sondage/get/'+id;
-    const token  = cookies.token;
-    console.log(token);
-    console.log(url);
+class Sondage extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+    this.state = {
+      nom : props.location.state.nom,
+      aRepondu : props.location.state.aRepondu,
+      nbQuestion : props.location.state.nbQuestion,
+
+      id : props.params.id,
+      cookies : props.cookies,
+      token : props.cookies.token,
+      questionsList : []
+    };
+  }
+
+  componentDidMount() {
+    // fetch questions of sondage
+    const fullPath = window.location.href;
+    let url = fullPath.replace('sondage','api/sondage/get-question-of-sondage')
+    const token = this.state.token;
+
     fetch(url, {
       method: 'GET',
       headers: {
@@ -19,29 +32,21 @@ function Sondage(props) {
       }
     })
     .then(response => response.json())
-    .then(data => setData(data))
+    .then(data => this.setState({ questionsList: data }))
     .catch(error => console.error(error));
-  }, [id]);
 
-  if (!data) {
-    console.log(data);
-    return <p>Loading...</p>;
-  }
-  else{
-    console.log(data);
+    // checf if user respond to sondage
   }
 
-  return (
-    <div>
-      <h1>Sondage {id}</h1>
-      <p>{data.description}</p>
-      <ul>
-        {data.questions.map(question => (
-          <li key={question.id}>{question.texte}</li>
-        ))}
-      </ul>
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        <h1>{this.state.nom}</h1>
+        <h2>{this.state.nbQuestion} Questions</h2>
+        <h2>{this.state.aRepondu ? 'Vous avez déjà répondu à ce sondage' : 'Vous n\'avez pas encore répondu à ce sondage'}</h2>
+      </div>
+    );
+  }
+  
 }
-
-export default Sondage;
+export default withRouter(Sondage);
