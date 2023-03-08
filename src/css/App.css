@@ -30,27 +30,35 @@
 .wrap-logo{
   margin: 10px;
 }
+
+/* user header */
 .user-header{
   padding: 10px;
   margin: 10px;
 
   background-color: var(--dark-blue);
+  color: var(--font-color-blue);
   border-radius: 15px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
 
-  height: 70px;
-
-  transition: all 0.3s;
+  border: none;
+  transition: all 0.2s;
 }
 .user-header-icon{
+  margin-bottom: 5px;
   font-size: 30px;
 }
 .user-header-name{
   font-size: 20px;
+}
+.user-header:hover{
+  cursor: pointer;
+  background-color: var(--border-dark-blue);
+  transform: scale(0.95);
+  
 }
 /* FOOTER */
 footer{
@@ -150,7 +158,7 @@ input {
   border-radius: 10px;
 }
 
-button {
+.button {
   border: none;
   background-color: white;
   padding: 20px;
@@ -175,4 +183,8 @@ button {
   border: 2px solid #af2525;
   border-radius: 10px;
   padding: 5px;
+}
+.sondage-link{
+  text-decoration: none;
+  color: var(--font-color-red);
 }

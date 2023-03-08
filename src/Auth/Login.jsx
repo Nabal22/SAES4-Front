@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Sondages from '../Sondages';
 
 export const Login = (props) => {
   const [email, setEmail] = useState('');
@@ -8,7 +7,7 @@ export const Login = (props) => {
   const cookies = props.cookies;
 
   if(cookies.get('token')!=null){
-    return ( <Sondages token={cookies.get('token')} /> )
+    window.location.href = '/sondages';
   }
   else{
     const handleSubmit = async (e) => {

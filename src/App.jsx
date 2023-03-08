@@ -5,6 +5,11 @@ import './index.css';
 import Register from './Auth/Register';
 import Login from './Auth/Login';
 import React, {useState} from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import Sondages from './Sondages';
+import Sondage from './Sondage';
+import NotFound from './NotFound';
 // import ReactDOM from 'react-dom';
 import img from './img/logo.png';
 
@@ -19,6 +24,10 @@ function App() {
   const toggleForm = (formName) =>{
     setCurrentForm(formName);
   }
+
+  const [cookieState, setCookieState] = useState({
+    token: cookies.get('token')
+  });
 
   return (
     <div className="App">
@@ -36,9 +45,16 @@ function App() {
         /> */}
         <button onClick={() =>{ cookies.remove('token'); window.location.href = '/'; }}> Se déconnecter </button>
       </header>
-        {
-          currentForm === "login" ? <Login cookies={cookies} onFormSwitch={toggleForm} /> : <Register cookies={cookies} onFormSwitch={toggleForm} />
-        }
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={currentForm === "login" ? <Login cookies={cookies} onFormSwitch={toggleForm} /> : <Register cookies={cookies} onFormSwitch={toggleForm} />}>
+            </Route>
+            <Route path="/sondages" element={<Sondages cookies={cookieState} />}>
+            </Route>
+            <Route path="/sondage/:id" element={<Sondage cookies={cookieState} />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
       <footer>
         <span>Text Footer</span>
       </footer>
